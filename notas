@@ -1,0 +1,20 @@
+# Ejemplo de uso
+    clientes = Clientes("clientes.json")
+    cliente = {"rfc": "1234567890", "nombre": "Juan Pérez", "telefono": "5555555555"}
+    clientes.crear(cliente)
+
+    productos = Productos("productos.json")
+    producto = {"codigo": "P001", "nombre": "Laptop", "descripcion": "Lenovo Thinkpad T420", "precio": 3500}
+    productos.crear(producto)codi
+
+    ventas = Ventas("ventas.json", clientes, productos)
+    venta = {"rfc_cliente": "1234567890", "codigo_producto": "P000", "fecha": "2022-01-01", "total": 3500}
+    ventas.crear(venta)
+
+    # leyendo el json
+    datos_cliente = clientes.leer_de_json()
+    print(datos_cliente)
+    datos_producto = productos.leer_de_json()
+    print(datos_producto)
+    datos_venta = ventas.leer_de_json()
+    print(datos_venta)
