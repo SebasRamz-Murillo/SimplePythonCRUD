@@ -31,4 +31,6 @@ class JSON_Handle:
     def clearFille(archivo):
         os.remove(archivo)
 if __name__ == "__main__":
-    JSON_Handle.clear_all_files()
+    #JSON_Handle.clear_all_files()
+
+    JSON_Handle.clearFille("Mongo.json")

@@ -25,7 +25,17 @@ class MongoConexion:
                 print(f"Base de datos no encontrada")
                 print(f"Creando base de datos {self.dbname} ")
                 self.db = self.client[self.dbname]
-                print(f"{self.dbname} creada y conectada")
+                print(f"Bd {self.dbname} creada y conectada")
+
+    def getStatus(self):
+        self.client = pymongo.MongoClient(self.url, server_api=ServerApi('1'))
+        try:
+            self.client.server_info()
+        except Exception as e:
+            return "Desconectado"
+        else:
+            return "Conectado"
+
 
     def insert_one(self, collection, data):
         coll = self.db[collection]

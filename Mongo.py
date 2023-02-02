@@ -57,19 +57,22 @@ class Mongo(Lista, MongoConexion):
         mongo_json = self.json.leer_de_json()
         mongo_obj = []
         for mon in mongo_json:
-            cli = Mongo(mon["user"], mon["contra"], mon["cluster"], mon["token"], mon["bd"], mon["url"])
+            cli = Mongo(user=mon["user"], contra=mon["contra"], cluster=mon["cluster"], token=mon["token"], bd=mon["bd"], url=mon["url"])
             mongo_obj.append(cli)
         return mongo_obj
 
 
 if __name__ == "__main__":
-    mong = Mongo()
-    mongo1 = Mongo(url="mongodb+srv://pablo:1010@cluster0.qfgfj6v.mongodb.net/?retryWrites=true&w=majority",bd="VentasRamirez")
-    mongo2 = Mongo(user="admin", contra="root", cluster="cluster0", token="hcy4jnm", bd="VentasRamirez")
+    # mong = Mongo()
+    # for conexion in mong.from_json():
+    #     print(conexion)
 
-    mongo1.conect()
-    mongo2.conect()
-
-    data={'nombre': "paaaaaaassssaaaaa"}
-    mongo1.insert_one("Personas",data)
-    mongo2.insert_one("Personas",data)
+    mongo1 = Mongo(url="mongodb+srv://pablaao:1010@cluster0.qfgfj6v.mongodb.net/?retryWrites=true&w=majority",bd="VentasRamirez")
+    # mongo2 = Mongo(user="admin", contra="root", cluster="cluster0", token="hcy4jnm", bd="VentasRamirez")
+    print(mongo1.getStatus())
+    # mongo1.conect()
+    # mongo2.conect()
+    # mong.agregar(mongo1.to_dict())
+    # data={'nombre': "paaaaaaassssaaaaa"}
+    # mongo1.insert_one("Personas",data)
+    # mongo2.insert_one("Personas",data)

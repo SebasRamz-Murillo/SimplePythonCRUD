@@ -1,21 +1,47 @@
-from conecMongo import MongoConexion
-
+from Mongo import Mongo
 class interBD:
     def __init__(self):
-        self.bd = MongoConexion(None,None,None)
-
+        self.mong=Mongo()
     def conectarABd(self):
-        print("Inserte los datos de conexion")
-        user = input("Usuario: ")
-        contra = input("Contraseña: ")
-        clus = input("Cluster: ")
-        self.bd = MongoConexion(user,contra,clus)
-        op= input("Desea nombrar la bd?(Nombre predeterminado: VentasRamirez): y/n   ")
-        if op=="y":
-            nomBd=input("Nombre de la bd:")
-            self.bd.connect(nomBd)
-        else:
-            self.bd.connect("VentasRamirez")
+        print("------Conexion a MongoDB------")
+        print("1. Ingresar por url")
+        print("2. Ingresar por datos")
+        opci=input("Seleccione una opcion: ")
+        if opci =="2":
+            print("Inserte los datos de conexion")
+            user = input("Usuario: ")
+            contra = input("Contraseña: ")
+            clus = input("Cluster: ")
+            token = input("Toke: ")
+            op = input("Desea nombrar la bd?(Nombre predeterminado: VentasRamirez): y/n   ")
+            if op == "y":
+                nomBd = input("Nombre de la bd:")
+                bd = nomBd
+            else:
+                bd = "VentasRamirez"
+            mongoBD = Mongo(user=user, contra=contra, cluster=clus, token=token, bd=bd)
+        elif opci=="1":
+            print("Inserte la url de conexion")
+            url = input("Url: ")
+            op = input("Desea nombrar la bd?(Nombre predeterminado: VentasRamirez): y/n   ")
+            if op == "y":
+                nomBd = input("Nombre de la bd:")
+                bd = nomBd
+            else:
+                bd = "VentasRamirez"
+            mongoBD = Mongo(url=url,
+                           bd=bd)
+        self.mong.agregar(mongoBD.to_dict())
+
+
+    def mostrarConexiones(self):
+        conexiones_data = self.mong.from_json()
+        print("{:<1} {:<20} {:<20} {:<20} {:<20}".format("#", "User", "Cluster", "BD", "Status"))
+        i = 0
+        for conexion in conexiones_data:
+            i = i + 1
+            print("{:<1} {:<20} {:<20} {:<20} {:<20}".format(i, conexion.user, conexion.cluster, conexion.bd,conexion.getStatus()))
+        return len(conexiones_data), conexiones_data
 
 
     def menuBd(self):
@@ -26,7 +52,7 @@ class interBD:
         print("4. Ver datos de conexion")
         print("5. Regresar")
         print("------------------------------------")
-        opcion = input("Seleccione una opción: ")
+        opcion = input("Selection una opción: ")
         return opcion
 
     def mainBd(self):
@@ -41,10 +67,9 @@ class interBD:
                 pass
                 input("Presione Enter para continuar...")
             elif opcion == "3":
-                pass
                 input("Presione Enter para continuar...")
             elif opcion == "4":
-                pass
+                self.mostrarConexiones()
                 input("Presione Enter para continuar...")
             elif opcion == "5":
                 print("Saliendo del sistema...")
@@ -56,3 +81,8 @@ class interBD:
 
 if __name__ == "__main__":
     interBD().mainBd()
+
+    #mongodb+srv://admin:root@cluster0.hcy4jnm.mongodb.net/?retryWrites=true&w=majority
+    #mongodb+srv://pablo:1010@cluster0.qfgfj6v.mongodb.net/?retryWrites=true&w=majority
+
+    #mongodb+srv://pablaao:1010@cluster0.qfgfj6v.mongodb.net/?retryWrites=true&w=majority
