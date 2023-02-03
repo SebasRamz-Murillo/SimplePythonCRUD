@@ -1,4 +1,5 @@
 from Producto import Productos as Producto
+from interBD import interBD
 
 
 
@@ -89,6 +90,13 @@ class interProductos:
             return interProductos.seleccionar_productos()
 
     def menuProducto(self):
+        print("------------------------------------")
+        if interBD().checkarConexionEnUso():
+            obj, bandera, bool = interBD().checkarConexionEnUso()
+            print(f"Datos de conexion: {obj.user}-{obj.cluster}-{obj.bd}------")
+            print(f"Estado: {bandera}")
+        else:
+            print("No hay conexion activa")
         print("------------------------------------")
         print("1. Crear un producto")
         print("2. Modificar un producto")

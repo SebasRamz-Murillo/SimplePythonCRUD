@@ -4,6 +4,7 @@ from conecMongo import MongoConexion
 
 class Mongo(Lista, MongoConexion):
     def __init__(self, *args, **kwargs):
+        self.stat = kwargs.get('stat', 0)
         if 'url' in kwargs:
             self.url = kwargs.get('url', '')
             self.parse_url(self.url)
@@ -34,7 +35,7 @@ class Mongo(Lista, MongoConexion):
         self.token = cluster_parts[1]
 
     def __str__(self):
-        return f"{self.user},{self.contra},{self.cluster},{self.token},{self.bd},{self.url}"
+        return f"{self.user},{self.contra},{self.cluster},{self.token},{self.bd},{self.url},{self.stat}"
 
     def to_dict(self):
         listaDicc = []
@@ -49,7 +50,7 @@ class Mongo(Lista, MongoConexion):
             listaDicc.append(self.listas)
         else:
             diccionario = {"user": self.user, "contra": self.contra, "cluster": self.cluster, "token": self.token,
-                           "bd": self.bd, "url": self.url}
+                           "bd": self.bd, "url": self.url,"stat": self.stat}
             listaDicc.append(diccionario)
             return diccionario
 
@@ -57,7 +58,7 @@ class Mongo(Lista, MongoConexion):
         mongo_json = self.json.leer_de_json()
         mongo_obj = []
         for mon in mongo_json:
-            cli = Mongo(user=mon["user"], contra=mon["contra"], cluster=mon["cluster"], token=mon["token"], bd=mon["bd"], url=mon["url"])
+            cli = Mongo(user=mon["user"], contra=mon["contra"], cluster=mon["cluster"], token=mon["token"], bd=mon["bd"], url=mon["url"], stat=mon["stat"])
             mongo_obj.append(cli)
         return mongo_obj
 

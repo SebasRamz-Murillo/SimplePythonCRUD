@@ -5,6 +5,7 @@ import os
 import datetime
 from Producto import Productos as Producto
 from Cliente import Cliente
+from interBD import interBD
 
 
 class interVentas:
@@ -156,11 +157,20 @@ class interVentas:
         return len(ventas_data), ventas_data
 
     def menuVentas(self):
+        print("------------------------------------")
+        if interBD().checkarConexionEnUso():
+            obj, bandera, bool = interBD().checkarConexionEnUso()
+            print(f"Datos de conexion: {obj.user}-{obj.cluster}-{obj.bd}------")
+            print(f"Estado: {bandera}")
+        else:
+            print("No hay conexion activa")
+        print("------------------------------------")
         print("1. Crear una venta")
         print("2. Modificar una venta")
         print("3. Eliminar una venta")
         print("4. Ver ventas")
         print("5. Regresar")
+        print("------------------------------------")
         opcion = input("Seleccione una opción: ")
         return opcion
 

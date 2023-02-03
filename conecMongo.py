@@ -36,6 +36,16 @@ class MongoConexion:
         else:
             return "Conectado"
 
+    def getError(self):
+        self.client = pymongo.MongoClient(self.url, server_api=ServerApi('1'))
+        try:
+            self.client.server_info()
+
+        except Exception as e:
+            pass
+        else:
+            return "Conectado"
+
 
     def insert_one(self, collection, data):
         coll = self.db[collection]

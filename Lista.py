@@ -31,7 +31,11 @@ class Lista:
 
     def filter(self, key, value):
         filtered_list = [item for item in self.listas if item[key] == value]
-        return filtered_list
+        if filtered_list:
+            id = self.listas.index(filtered_list[0])
+            return filtered_list, id
+        else:
+            return None
 
     def paginate(self, page_size, page_number):
         start = (page_number - 1) * page_size

@@ -1,4 +1,5 @@
 from Cliente import Cliente
+from interBD import interBD
 
 
 class interClientes:
@@ -66,6 +67,13 @@ class interClientes:
             return interClientes.seleccionar_cliente()
 
     def menuClientes(self):
+        print("------------------------------------")
+        if interBD().checkarConexionEnUso():
+            obj, bandera, bool = interBD().checkarConexionEnUso()
+            print(f"Datos de conexion: {obj.user}-{obj.cluster}-{obj.bd}------")
+            print(f"Estado: {bandera}")
+        else:
+            print("No hay conexion activa")
         print("------------------------------------")
         print("1. Crear un cliente")
         print("2. Modificar un cliente")
