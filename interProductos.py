@@ -9,12 +9,37 @@ class interProductos:
         self.prod = Producto()
 
     def agregarProducto(self):
+        print("------------------------------------")
+        if interBD().checkarConexionEnUso():
+            obj, bandera, bool = interBD().checkarConexionEnUso()
+            print(f"Datos de conexion: {obj.user}-{obj.cluster}-{obj.bd}------")
+            print(f"Estado: {bandera}")
+        else:
+            print("No hay conexion activa")
+        print("------------------------------------")
         codigo = input("Ingese el codigo del producto: ")
         nombre = input("Ingrese el nombre del producto: ")
         descripcion = input("Ingrese una breve descripcion del producto: ")
         precio = int(input("Ingrese el precio unitario del producto: "))
-        producto = Producto(codigo, nombre, descripcion, precio)
-        self.prod.agregar(producto.to_dict())
+        if interBD().checkarConexionEnUso():#si da
+            stat=2
+            producto = Producto(codigo, nombre, descripcion, precio, stat)
+            self.prod.agregar(producto.to_dict())
+            list, id = self.prod.filter("stat", 2)
+            obj.conect()
+            for item in list:
+                producS = item
+                print(f"Guardando en BD: {item['nombre']}")
+                coleccion = "Productos"
+                producS["stat"] = 1
+                self.prod.actualizar(id, producS)
+                obj.insert_one(coleccion, item)
+        else:
+            stat=2
+            producto = Producto(codigo, nombre, descripcion, precio, stat)
+            self.prod.agregar(producto.to_dict())
+
+
         print("Producto creado exitosamente!")
 
     def actulizarProductos(self):
@@ -135,9 +160,4 @@ class interProductos:
 
 if __name__ == "__main__":
     # print(interProductos().seleccionar_productos_varios())
-    selecc = interProductos().seleccionar_productos_varios()
-    print(selecc)
-    for sele in selecc:
-        print(sele)
     interProductos().mainProducto()
-

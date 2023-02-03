@@ -77,12 +77,8 @@ class MongoConexion:
 
 
 if __name__ == "__main__":
-    mongo_object = MongoConexion("mongodb+srv://pablo:1010@cluster0.qfgfj6v.mongodb.net/?retryWrites=true&w=majority")
-    if (mongo_object.conecDB("mydba")):
-        pass
-    else:
-        print("No hay bd")
+    #mongodb+srv://admin:root@cluster0.hcy4jnm.mongodb.net/?retryWrites=true&w=majority
 
-    mongo_object.conecCollec("Clientes")
-    data = {'nombre': "Sebastian"}
-    mongo_object.insert(data)
+    mongo_object = MongoConexion("mongodb+srv://admin:root@cluster0.hcy4jnm.mongodb.net/?retryWrites=true&w=majority","Prueba","cluster0")
+    datos={"codigo": "2333", "nombre": "214", "descripcion": "32", "precio": 23, "stat": 2}
+    print(mongo_object.getStatus())

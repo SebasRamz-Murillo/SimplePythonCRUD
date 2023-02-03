@@ -57,13 +57,13 @@ class interVentas:
                     total = total + float(producto.precio)
                 print("Total de venta: $" + str(total))
                 print("Aceptar: 1")
-                print("Modificar: 24")
+                print("Modificar: 2")
                 opcion = input("Opcion:")
             else:
                 productoFinal=[]
                 for prod in prodList:
                     productoFinal.append(prod.to_dict())
-                ventaFinal = Venta(infoCli.to_dict(), productoFinal, self.fecha, total)
+                ventaFinal = Venta(infoCli.to_dict(), productoFinal, self.fecha, total, stat)
                 self.vent.agregar(ventaFinal.to_dict())
                 print("Venta creado exitosamente!")
                 break
